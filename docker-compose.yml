@@ -1,0 +1,7 @@
+name: zumba-tunnel
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    network_mode: host
+    command: tunnel --no-autoupdate run --token
+      eyJhIjoiNWU2MDk5OTUzNWY0NTY1ZWExZjM0YTViN2U0MWU0YWYiLCJ0IjoiMDU2YmVmNjYtMTc5Zi00MjgyLTliMzAtMjgwNDBhYjRhNDdlIiwicyI6IlltWmhObU0yWVdJdE1EbGhZeTAwT1RkbUxUaGtOREV0TWpWbU16ZGlaV0psWm1KbCJ9
