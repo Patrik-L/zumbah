@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import Qr from '$lib/qr.svelte';
-	import type { GameState } from '../types';
-	import PlayerCard from './users/player-card.svelte';
-	import { gameState } from './game-state.svelte';
+	import PlayerCard from '../users/player-card.svelte';
+	import { gameState, localState } from '../game-state.svelte';
 </script>
 
 <div class="player-cards">
-	{#each Object.values(gameState.players) as player}
+	{#each Object.values(localState.connectedPlayers) as player}
 		<PlayerCard {player}></PlayerCard>
 	{/each}
 </div>

@@ -1,7 +1,7 @@
 import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
-import { LobbyJoinParams, OrientationData, PlayerCreateParams } from "./types";
+import { GameState, LobbyJoinParams, OrientationData } from "./types";
 
 const app = express();
 const server = createServer(app);
@@ -71,10 +71,14 @@ io.on("connection", (socket) => {
   };
 
   socket.on("createLobby", (lobbyId: string) => {
-    if (hosts[socket.id]) {
+    if (
+      hosts[socket.id] ||
+      Object.values(hosts).filter((val) => val.lobbyId === lobbyId).length
+    ) {
       socket.emit("lobbyClose");
       return;
     }
+
     hosts[socket.id] = { lobbyId };
     socket.join(lobbyId);
   });
@@ -100,8 +104,14 @@ io.on("connection", (socket) => {
     io.to(host[0]).emit("sendOrientationData", data);
   });
 
-  socket.onAny((msg) => {
-    console.log("Got Message:", msg);
+  socket.on("updateGameState", (data: GameState) => {
+    console.log(players[socket.id]);
+    socket.broadcast.to(data.lobbyId).emit("updateGameState", data);
+  });
+
+  socket.on("sendWinSignal", (uid: string) => {
+    console.log("send win");
+    io.to(uid).emit("sendWinSignal");
   });
 });
 

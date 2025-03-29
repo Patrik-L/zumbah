@@ -2,11 +2,24 @@ export interface Player {
 	name: string;
 	id: string;
 	gyro: [a: number, b: number, c: number, d: number];
+	closeness: number;
+	wins: number;
 }
 
+export enum View {
+	Lobby = 'lobby',
+	InGame = 'inGame'
+}
 export interface GameState {
-	players: { [id: string]: Player };
 	name: string;
+	currentView: View | null;
+	targetAngle: SimpleQuarternion;
+	lobbyId: string;
+}
+
+export interface LocalState {
+	isHost: boolean;
+	connectedPlayers: { [id: string]: Player };
 }
 
 export interface PlayerCreateParams {
@@ -18,8 +31,10 @@ export interface LobbyJoinParams {
 	player: Player;
 }
 
+export type SimpleQuarternion = [a: number, b: number, c: number, d: number];
+
 export interface OrientationData {
-	quarternion: [a: number, b: number, c: number, d: number];
+	quarternion: SimpleQuarternion;
 	uid: string;
 }
 
@@ -30,5 +45,7 @@ export enum SignalTypes {
 	PlayerDisconnect = 'playerDisconnect',
 	LobbyClose = 'lobbyClose',
 	LeaveLobby = 'leaveLobby',
-	SendOrientationData = 'sendOrientationData'
+	SendOrientationData = 'sendOrientationData',
+	UpdateGameState = 'updateGameState',
+	SendWinSignal = 'sendWinSignal'
 }
