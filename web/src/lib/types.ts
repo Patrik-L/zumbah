@@ -20,6 +20,7 @@ export interface GameState {
 export interface LocalState {
 	isHost: boolean;
 	connectedPlayers: { [id: string]: Player };
+	hasInteracted: boolean;
 }
 
 export interface PlayerCreateParams {

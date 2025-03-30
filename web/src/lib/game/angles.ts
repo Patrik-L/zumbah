@@ -2,7 +2,14 @@ import type { SimpleQuarternion } from '$lib/types';
 import { Quaternion } from 'quaternion';
 import constQuaternions from 'quaternion';
 
-export const calculateCloseness = (a: SimpleQuarternion, b: SimpleQuarternion) => {
+export const calculateCloseness = (
+	a: SimpleQuarternion | undefined,
+	b: SimpleQuarternion | undefined
+) => {
+	if (a === undefined || b === undefined) {
+		return 1;
+	}
+
 	const first = new Quaternion(a).toEuler();
 	const second = new Quaternion(b).toEuler();
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { beforeNavigate } from '$app/navigation';
+	import { beforeNavigate, onNavigate } from '$app/navigation';
 	import { page } from '$app/state';
 	import AudioPlayer from '$lib/audio-player.svelte';
 	import Qr from '$lib/qr.svelte';
@@ -10,6 +10,7 @@
 	import PlayerCard from '../users/player-card.svelte';
 	import { sendWinSignal, updateGameState } from '../network/socket-requests';
 	import rawNextRoundSound from '$lib/assets/next-round.wav';
+	import rawAudio from '$lib/assets/game-music.mp3';
 
 	const rerollTargetAngle = () => {
 		gameState.targetAngle = [
@@ -51,10 +52,15 @@
 	});
 	beforeNavigate(() => {
 		clearInterval(updateLoop);
+		song.pause();
 	});
+
+	const song = new Audio(rawAudio);
+	song.volume = 0.2;
+	song.loop = true;
+	song.play();
 </script>
 
-<AudioPlayer></AudioPlayer>
 <div class="container">
 	<h2 style="font-size: 3em; margin-bottom: 0; color: #F28482">Let's Zumbaaaaaah!</h2>
 	<div class="game">
@@ -123,7 +129,7 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			background-color: #84a59d;
+			background-color: #84a589;
 			flex: 5;
 		}
 	}

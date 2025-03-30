@@ -9,7 +9,8 @@ const initialGameState: GameState = {
 
 const initialLocalState: LocalState = {
 	isHost: false,
-	connectedPlayers: {}
+	connectedPlayers: {},
+	hasInteracted: false
 };
 
 export const gameState: GameState = $state(initialGameState);

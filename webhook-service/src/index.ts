@@ -105,7 +105,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("updateGameState", (data: GameState) => {
-    console.log(players[socket.id]);
     socket.broadcast.to(data.lobbyId).emit("updateGameState", data);
   });
 
